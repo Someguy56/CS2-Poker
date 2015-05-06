@@ -8,7 +8,8 @@ public class Controller
 
    public static void main(String[] args){
       deck = new Deck();
-      //System.out.println(deck);
+      System.out.println(deck);
+      
       hand1 = new Hand();
       hand2 = new Hand();
 
