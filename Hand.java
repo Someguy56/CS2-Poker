@@ -38,47 +38,49 @@ public class Hand implements Comparable {
    public String handValue()
    {
      //return "TODO: String of Best Hand; may need helper methods";
-     HashMap<Integer, String> cardsHand = new HashMap<Integer,String>();
+     HashMap<String, Integer> cardsHand = new HashMap<String,Integer>();
      HashMap<Integer, Integer> cardsHand1 = new HashMap<Integer, Integer>();
      HashSet<Integer> royal = new HashSet<Integer>();
      royal.add(10); royal.add(11); royal.add(12); royal.add(13); royal.add(14);
-     int handValue = 0;
      for(Card x : hand)
      {
-       cardsHand.put(x.value,x.suit);
-       //handValue = handValue + x.value;
+       if(cardsHand.containsKey(x.suit))
+         cardsHand.put(x.suit, (cardsHand.get(x.suit)+1));
+       else
+         cardsHand.put(x.suit, 1);
+
        if(cardsHand1.containsKey(x.value))
          cardsHand1.put(x.value, (cardsHand1.get(x.value)+1));
        else
          cardsHand1.put(x.value, 1);
      }
 
-     if(cardsHand.keySet().containsAll(royal) && cardsHand.values().size() == 1)
+     if(cardsHand1.keySet().containsAll(royal) && cardsHand.containsValue(5))
        return "Royal Flush";
 
-     if(straightChecker() == true && cardsHand.keySet().size() == 5 && cardsHand.values().size() == 1)
+     if(straightChecker() == true && cardsHand.containsValue(5))
        return "Straight Flush";
 
      //if(cardsHand.keySet().size() <= 2 && cardsHand.values().size() >= 4)
-     if(counters() == 3 && cardsHand1.containsValue(4))
+     if(cardsHand1.containsValue(4))
        return "Four of a Kind";
 
-     if(counters() == 3)
+     if(cardsHand1.containsValue(3) && cardsHand1.containsValue(2))
        return "Full House";
 
-     if(cardsHand.keySet() != royal && cardsHand.values().size() == 1)
+     if(cardsHand.containsValue(5))
        return "Flush";
 
-     if(straightChecker() == true && cardsHand.values().size() != 1)
+     if(straightChecker() == true)
        return "Straight";
 
-     if(counters() == 2 && cardsHand1.containsValue(3))
+     if(cardsHand1.containsValue(3))
        return "Three of a Kind";
 
-     if(counters() == 2)
+     if(cardsHand1.containsValue(2))
        return "Two Pairs";
 
-     if(counters() == 1)
+     if(cardsHand1.containsValue(1))
        return "One Pair";
 
      else
@@ -89,6 +91,7 @@ public class Hand implements Comparable {
 
    }
 
+   /*
    public int counters()
    {
      int count = 0;
@@ -102,6 +105,7 @@ public class Hand implements Comparable {
      }
      return count;
    }
+   */
 
    public boolean straightChecker()
    {
